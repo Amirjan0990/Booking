@@ -1,55 +1,45 @@
-@extends('layouts.app')
-
+@extends('layouts.main')
 @section('title')
+    <h3>Таблица ресторанов</h3>
 @endsection
 
 @section('content')
-    @if(session('message'))
-        <div class="alert alert-danger">
-            {{session('message')}}
-        </div>
-    @elseif(session('message2'))
-        <div class="alert alert-info">
-            {{session('message2')}}
-        </div>
-    @endif
-    <a href="{{route('client.create')}}" class="btn btn-primary">Добавить</a>
     <table class="table">
         <tr>
             <th>#</th>
-            <th>Заголовок</th>
-            <th>Рисунок</th>
-            <th>Категория</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
-            <th>Удалить</th>
-            <th>Изменить</th>
+            <th>name</th>
+            <th>surname</th>
+            <th>phone</th>
+            <th>restaurant_id</th>
+            <th>user_id</th>
+            <th>delete</th>
+            <th>update</th>
+            <th>Additionally</th>
         </tr>
-        @foreach($all_client as $client)
+        @foreach($clients as $client)
             <tr>
                 <td>{{$loop->iteration}}</td>
-                <td>{{$client->title}}</td>
-                <td>{{$client->image}}</td>
-                <td>{{$client->category->name}}</td>
-                <td>{{$client->category_id}}</td>
-                <td>{{$client->update_at}}</td>
+                <td>{{$client->name}}</td>
+                <td>{{$client->surname}}</td>
+                <td>{{$client->phone}}</td>
+                <td>{{$client->restaurant->name}}</td>
+                <td>{{$client->user->name}}</td>
                 <td>
-                    <form action="{{route('client.destroy', $client->id)}}" method="post">
+                    <form action="{{route('clients.destroy', $client->id)}}" method="post">
                         @csrf
                         @method('delete')
-                        <input type="submit" value="Удалить" class="btn btn-danger">
+                        <input type="submit" value="delete" class="btn btn-danger">
                     </form>
                 </td>
                 <td>
-                    <form action="{{route('client.edit', $client->id)}}" method="get">
+                    <form action="{{route('clients.edit', $client->id)}}" method="get">
                         @csrf
-                        <input type="submit" value="Изменить" class="btn btn-info">
+                        <input type="submit" value="update" class="btn btn-info">
                     </form>
                 </td>
             </tr>
         @endforeach
     </table>
-@endsection
 
-@section('footer')
+
 @endsection

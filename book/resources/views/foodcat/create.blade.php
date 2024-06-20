@@ -13,18 +13,10 @@
         @endif
         <form action="{{route('foodcat.story')}}" method="post" enctype="multipart/form-data">
             @csrf
-            <label for="">Заголовок : </label>
-            <input type="text" name="title" class="form-control">
-            <label for="">Текст : </label>
-            <input type="text" name="text" class="form-control">
-            <label for="">Категория : </label>
-            <select name="category_id" id="" class="form-control">
-                @foreach($foodcats as $foodcat)
-                    <option value="{{$foodcat->id}}">{{$foodcat->name}}</option>
-                @endforeach
-            </select>
-            <label for="">Рисунок : </label>
-            <input type="file" name="image" class="form-control">
+            <label for="">Name : </label>
+            <input type="text" name="name" class="form-control">
+            <label for="">Description : </label>
+            <input type="text" name="description" class="form-control">
             <input type="submit" value="Добавить" class="btn btn-primary form-control">
         </form>
     </div>

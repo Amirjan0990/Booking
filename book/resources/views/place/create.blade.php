@@ -1,34 +1,33 @@
+<!-- resources/views/places/create.blade.php -->
 @extends('layouts.app')
 
-@section('title')
-    Добавление
-@endsection
-<!-- create -->
 @section('content')
     <div class="container">
-        @if(session('message'))
-            <div class="alert alert-success">
-                {{session('message')}}
-            </div>
-        @endif
-        <form action="{{route('place.story')}}" method="post" enctype="multipart/form-data">
+        <h1>Create Place</h1>
+        <form action="{{ route('places.store') }}" method="POST">
             @csrf
-            <label for="">Заголовок : </label>
-            <input type="text" name="title" class="form-control">
-            <label for="">Текст : </label>
-            <input type="text" name="text" class="form-control">
-            <label for="">Категория : </label>
-            <select name="category_id" id="" class="form-control">
-                @foreach($places as $place)
-                    <option value="{{$place->id}}">{{$place->name}}</option>
-                @endforeach
-            </select>
-            <label for="">Рисунок : </label>
-            <input type="file" name="image" class="form-control">
-            <input type="submit" value="Добавить" class="btn btn-primary form-control">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="number">Number:</label>
+                <input type="text" id="number" name="number" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="capacity">Capacity:</label>
+                <input type="number" id="capacity" name="capacity" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="restaurant_id">Restaurant ID:</label>
+                <input type="number" id="restaurant_id" name="restaurant_id" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
 @endsection
 
-@section('footer')
-@endsection

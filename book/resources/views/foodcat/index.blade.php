@@ -17,22 +17,16 @@
     <table class="table">
         <tr>
             <th>#</th>
-            <th>Заголовок</th>
-            <th>Рисунок</th>
-            <th>Категория</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
+            <th>Name</th>
+            <th>Description</th>
             <th>Удалить</th>
             <th>Изменить</th>
         </tr>
         @foreach($all_foodcat as $foodcat)
             <tr>
                 <td>{{$loop->iteration}}</td>
-                <td>{{$foodcat->title}}</td>
-                <td>{{$foodcat->image}}</td>
-                <td>{{$foodcat->category->name}}</td>
-                <td>{{$foodcat->category_id}}</td>
-                <td>{{$foodcat->update_at}}</td>
+                <td>{{$foodcat->name}}</td>
+                <td>{{$foodcat->description}}</td>
                 <td>
                     <form action="{{route('foodcat.destroy', $foodcat->id)}}" method="post">
                         @csrf

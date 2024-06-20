@@ -17,22 +17,24 @@
     <table class="table">
         <tr>
             <th>#</th>
-            <th>Заголовок</th>
-            <th>Рисунок</th>
-            <th>Категория</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
+            <th>Start_time</th>
+            <th>End_time</th>
+            <th>Guests</th>
+            <th>Status</th>
+            <th>Place_id</th>
+            <th>Client_id</th>
             <th>Удалить</th>
             <th>Изменить</th>
         </tr>
         @foreach($all_booking as $booking)
             <tr>
                 <td>{{$loop->iteration}}</td>
-                <td>{{$booking->title}}</td>
-                <td>{{$booking->image}}</td>
-                <td>{{$booking->category->name}}</td>
-                <td>{{$booking->category_id}}</td>
-                <td>{{$booking->update_at}}</td>
+                <td>{{$booking->start}}</td>
+                <td>{{$booking->end}}</td>
+                <td>{{$booking->guests}}</td>
+                <td>{{$booking->status}}</td>
+                <td>{{$booking->place->name}}</td>
+                <td>{{$booking->client->name}}</td>
                 <td>
                     <form action="{{route('booking.destroy', $booking->id)}}" method="post">
                         @csrf

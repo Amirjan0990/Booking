@@ -1,55 +1,46 @@
-@extends('layouts.app')
-
-@section('title')
-@endsection
-
-@section('content')
-    @if(session('message'))
-        <div class="alert alert-danger">
-            {{session('message')}}
-        </div>
-    @elseif(session('message2'))
-        <div class="alert alert-info">
-            {{session('message2')}}
-        </div>
-    @endif
-    <a href="{{route('restaurant.create')}}" class="btn btn-primary">Добавить</a>
-    <table class="table">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurants</title>
+</head>
+<body>
+<h1>Restaurants</h1>
+<a href="{{ route('restaurants.create') }}" class="btn btn-primary">Create Restaurant</a>
+<table class="table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Category</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach ($restaurants as $restaurant)
         <tr>
-            <th>#</th>
-            <th>Заголовок</th>
-            <th>Рисунок</th>
-            <th>Категория</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
-            <th>Удалить</th>
-            <th>Изменить</th>
+            <td>{{ $restaurant->id }}</td>
+            <td>{{ $restaurant->name }}</td>
+            <td>{{ $restaurant->address }}</td>
+            <td>{{ $restaurant->phone }}</td>
+            <td>{{ $restaurant->email }}</td>
+            <td>{{ $restaurant->category->name }}</td>
+            <td>
+                <a href="{{ route('restaurants.show', $restaurant) }}" class="btn btn-info">Show</a>
+                <a href="{{ route('restaurants.edit', $restaurant) }}" class="btn btn-warning">Edit</a>
+                <form action="{{ route('restaurants.destroy', $restaurant) }}" method="POST" style="display: inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
         </tr>
-        @foreach($all_restaurant as $restaurant)
-            <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{$restaurant->title}}</td>
-                <td>{{$restaurant->image}}</td>
-                <td>{{$restaurant->category->name}}</td>
-                <td>{{$restaurant->category_id}}</td>
-                <td>{{$restaurant->update_at}}</td>
-                <td>
-                    <form action="{{route('restaurant.destroy', $restaurant->id)}}" method="post">
-                        @csrf
-                        @method('delete')
-                        <input type="submit" value="Удалить" class="btn btn-danger">
-                    </form>
-                </td>
-                <td>
-                    <form action="{{route('restaurant.edit', $restaurant->id)}}" method="get">
-                        @csrf
-                        <input type="submit" value="Изменить" class="btn btn-info">
-                    </form>
-                </td>
-            </tr>
-        @endforeach
-    </table>
-@endsection
-
-@section('footer')
-@endsection
+    @endforeach
+    </tbody>
+</table>
+</body>
+</html>

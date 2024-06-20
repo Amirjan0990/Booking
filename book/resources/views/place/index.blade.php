@@ -1,55 +1,42 @@
+<!-- resources/views/places/index.blade.php -->
 @extends('layouts.app')
 
-@section('title')
-@endsection
-
 @section('content')
-    @if(session('message'))
-        <div class="alert alert-danger">
-            {{session('message')}}
-        </div>
-    @elseif(session('message2'))
-        <div class="alert alert-info">
-            {{session('message2')}}
-        </div>
-    @endif
-    <a href="{{route('place.create')}}" class="btn btn-primary">Добавить</a>
-    <table class="table">
-        <tr>
-            <th>#</th>
-            <th>Заголовок</th>
-            <th>Рисунок</th>
-            <th>Категория</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
-            <th>Удалить</th>
-            <th>Изменить</th>
-        </tr>
-        @foreach($all_place as $place)
+    <div class="container">
+        <h1>Places List</h1>
+        <a href="{{ route('places.create') }}" class="btn btn-primary mb-3">Create New Place</a>
+        <table class="table">
+            <thead>
             <tr>
-                <td>{{$loop->iteration}}</td>
-                <td>{{$place->title}}</td>
-                <td>{{$place->image}}</td>
-                <td>{{$place->category->name}}</td>
-                <td>{{$place->category_id}}</td>
-                <td>{{$place->update_at}}</td>
-                <td>
-                    <form action="{{route('place.destroy', $place->id)}}" method="post">
-                        @csrf
-                        @method('delete')
-                        <input type="submit" value="Удалить" class="btn btn-danger">
-                    </form>
-                </td>
-                <td>
-                    <form action="{{route('place.edit', $place->id)}}" method="get">
-                        @csrf
-                        <input type="submit" value="Изменить" class="btn btn-info">
-                    </form>
-                </td>
+                <th>Name</th>
+                <th>Number</th>
+                <th>Description</th>
+                <th>Capacity</th>
+                <th>Restaurant ID</th>
+                <th>Actions</th>
             </tr>
-        @endforeach
-    </table>
+            </thead>
+            <tbody>
+            @foreach ($places as $place)
+                <tr>
+                    <td>{{ $place->name }}</td>
+                    <td>{{ $place->number }}</td>
+                    <td>{{ $place->description }}</td>
+                    <td>{{ $place->capacity }}</td>
+                    <td>{{ $place->restaurant_id }}</td>
+                    <td>
+                        <a href="{{ route('places.show', $place->id) }}" class="btn btn-info btn-sm">View</a>
+                        <a href="{{ route('places.edit', $place->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                        <form action="{{ route('places.destroy', $place->id) }}" method="POST" style="display: inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this place?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
 @endsection
 
-@section('footer')
-@endsection
